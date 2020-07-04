@@ -8,16 +8,20 @@ function ProductScreen(props) {
   const [qty, setQty] = useState(1);
   const productDetails = useSelector(state => state.productDetails);
   const { product, loading, error } = productDetails;
+  // Get id from param obj and assign it to productId
+  const { id: prodcutId } = props.match.params;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Grab product Id
-    const { id } = props.match.params;
-    dispatch(detailsProduct(id));
+    dispatch(detailsProduct(prodcutId));
     return () => {
       //
     }
   }, []);
+
+  const handleAddToCart = () => {
+    props.history.push("/cart/"  + prodcutId + "?qty=" + qty);
+  }
 
   return <div>
             <div>
@@ -55,7 +59,7 @@ function ProductScreen(props) {
                         Price: {product.price}
                       </li>
                       <li>
-                        Status: {product.price}
+                        Status: {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                       </li>
                       <li>
                         Qty: <select value={qty} onChange={(e) => {setQty(e.target.value)}}>
@@ -66,7 +70,9 @@ function ProductScreen(props) {
                             </select>
                       </li>
                       <li>
-                        <button className="button primary">Add to cart</button>
+                        { /* && = show this if condition is true, otherwise dont show at all */}
+                        { product.countInStock > 0 && <button onClick={handleAddToCart} className="button primary">Add to cart</button> }
+
                       </li>
                     </ul>
                 </div>
