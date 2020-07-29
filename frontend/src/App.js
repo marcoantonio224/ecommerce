@@ -22,7 +22,7 @@ function App() {
             <Link to="/">amazona</Link>
           </div>
           <div className="header-links">
-            <a href="cart.html">Cart</a>
+            <a href="/cart">Cart</a>
             {/* {userInfo ? (
               <Link to="/profile">{userInfo.name}</Link>
             ) : (
